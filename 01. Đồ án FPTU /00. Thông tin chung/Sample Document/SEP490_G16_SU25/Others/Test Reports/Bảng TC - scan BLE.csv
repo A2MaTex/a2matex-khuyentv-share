@@ -1,0 +1,64 @@
+ID;Mô tả;Điều kiện tiền đề;Các bước thực hiện;Kết quả mong đợi
+TC01;Lecturer bật BLE scan, phát hiện & kết nối 2 Student;Lecturer & 2 Student bật BLE, trong phạm vi;Bật scan trên Lecturer;Cả 2 Student được điểm danh
+TC02;Lecturer scan trong phạm vi gần (2-3m);Lecturer & Student bật BLE, khoảng cách gần;Bật scan;Điểm danh chính xác cả 2 Student
+TC03;Lecturer scan trong phạm vi tầng trên tầng dưới;Lecturer & Student bật BLE;Bật scan;Sóng tín hiệu kém khó scan 
+TC04;Student kết nối BLE trước khi Lecturer scan;Student bật BLE & chờ, Lecturer BLE tắt;Bật scan trên Lecturer;Phát hiện Student ngay
+TC05;Student kết nối BLE khi Lecturer đang scan;Lecturer scan, Student bật BLE giữa chừng;Student bật BLE;Lecturer phát hiện và điểm danh
+TC06;Cả 2 Student gửi tín hiệu liên tục;BLE hoạt động ổn định;Lecturer scan;Không trùng/bỏ sót bản ghi
+TC07;Chỉ 1 Student trong phạm vi BLE;1 Student gần, 1 Student xa;Lecturer scan;Điểm danh đúng 1 người
+TC08;Student di chuyển ra vào phạm vi BLE;Student di chuyển trong khi scan;Lecturer scan;Chỉ ghi nhận khi ở gần
+TC09;Lecturer scan nhiều lần cùng session;BLE hoạt động ổn định;Scan nhiều lần;Không trùng bản ghi
+TC10;2 Student có cùng tên/ID;BLE MAC khác nhau;Lecturer scan;Phân biệt đúng
+TC11;Student kết nối/ngắt liên tục;BLE chập chờn;Lecturer scan;Không crash
+TC12;Student tắt BLE;Lecturer scan, Student BLE off;Lecturer scan;Không điểm danh
+TC13;Quét ngoài phạm vi 10m+;Student ở xa;Lecturer scan;Không phát hiện
+TC14;Battery Student yếu, BLE tắt giữa chừng;Pin <5%;Lecturer scan;Không điểm danh
+TC15;Nhiều thiết bị BLE khác xung quanh;BLE nhiễu;Lecturer scan;Chưa thực hiện được
+TC16;Scan khi session đã hết thời gian;Session expired;Lecturer scan;Không ghi nhận
+TC17;Lecturer scan trong phạm vi 1 máy cách 3m , 1 máy sau cửa;1 Student gần, 1 Student sau cửa;Lecturer scan;Ghi nhận thiết bị ở gần
+TC18;Lecture scan 1 session 1 hs vào muộn vào 1p cuối;2 hs đều bật BLE;Lecturer scan;1 học sinh đạt 3/3 round -> attendent , 1 hs fail 1/3 round
+TC19;Lecture scan 1 học sinh tắt bluetooth;2 hs đều bật BLE;Lecturer scan;Ghi nhận 1 round của hs tắt bluetooth, 1 hs pass
+TC20;Lecture scan 3 người đặt vị trí tam giác đều 3m ;Lecturer & Student bật BLE;Lecturer scan;Cả 2 Student được điểm danh
+TC21;Student bị kill app (swipe-close) rồi mở lại;"Lecturer đã bắt đầu quét; Student A đang chạy app ở nền";"1) Trên Student A: mở switcher và quét bỏ app
+2) Mở lại app Student A
+3) Quan sát trên Lecturer 15s";Điểm danh vẫn ghi nhận 1 bản ghi
+TC22;Màn hình Student tắt (background advertising);"Lecturer quét; Student B đã bật BLE; Khoảng cách 2–4m";"1) Tắt màn hình Student B
+2) Để yên trong 30s";Vẫn điểm danh bình thường
+TC23;Airplane Mode trên Student;"Student A bật Airplane Mode (BLE off); Lecturer đang quét";"1) Bật Airplane Mode trên Student A
+2) Chờ 10s";"Lecturer không phát hiện Student A; khi tắt Airplane Mode + bật BLE, xuất hiện lại"
+TC24;Pin Student thấp (5–10%) nhưng vẫn quảng bá;"Student B pin 8%; BLE ON; Gần 2m";"1) Bắt đầu quét
+2) Theo dõi 60s";"Student B vẫn được điểm danh ổn định; không mất kết nối ngẫu nhiên."
+TC25;Chuyển Wi‑Fi↔4G trên Student trong khi quét;"Lecturer đang quét; Student A online; Khoảng cách 3m";"1) Trên Student A: tắt Wi‑Fi để chuyển sang 4G, sau đó bật lại
+2) Quan sát 30s";"phát hiện không bị ảnh hưởng; trạng thái điểm danh giữ nguyên."
+TC26;Student đi ra khỏi phạm vi 10m rồi quay lại;"Lecturer quét; Student B ban đầu ở 2m";"1) Student B đi xa ~12m trong 15s
+2) Quay lại đứng 2m";Khi quay lại, Student B tự động được nhận diện lại
+TC27;App Lecturer về nền rồi quay lại;"Đang quét; Thiết bị Lecturer nhấn Home";"1) Home để app về nền 20s
+2) Quay lại app";Quét vẫn đang hoạt động
+TC28;Khởi động lại app Lecturer giữa session;"Đang quét; Session S1 đã có ít nhất 1 bản ghi";"1) Force close app Lecturer
+2) Mở lại và vào S1";Chưa thực hiện tét
+TC29;Mất mạng trên Lecturer (offline-first);"Lecturer không có Internet; Student vẫn ở gần";"1) Bắt đầu quét offline
+2) Sau 2 phút bật mạng lại";Không thực hiện quét, khi lecture có mạng bắt đâu quét
+TC30;Cửa sổ điểm danh 09:00–09:15, đến trễ 09:16;"Thiết bị dùng giờ hệ thống; Session cấu hình cửa sổ thời gian";"1) Bắt đầu quét lúc 09:00
+2) Student A vào vùng quét lúc 09:16";"Student A **không** được điểm danh;"
+TC31;2 Lecturer quét cùng khu vực, khác session;"Lecturer L1: S1; Lecturer L2: S2; 2 Student đứng giữa";"1) L1 và L2 cùng bấm quét
+2) Quan sát trên cả hai";Chưa test
+TC32;Kết nối ngắt quãng (vào/ra liên tục);Student A đi qua lại rìa phạm vi trong 1 phút;"1) Bắt đầu quét
+2) Student di chuyển qua lại mỗi 5–10s";Hệ thống ghi nhận khi thiết bị đi vào phạm vi quét được
+TC33;Student đang dùng tai nghe BLE đồng thời;"Student B kết nối tai nghe qua BLE; quảng bá app vẫn bật";"1) Bắt đầu quét
+2) Quan sát 30s";"Điểm danh vẫn thành công;"
+TC34;Nhiều thiết bị lạ xung quanh (lọc theo UUID);"Có ≥10 thiết bị BLE khác; chỉ 2 Student dùng service UUID của hệ thống";"1) Bắt đầu quét với filter UUID
+2) Quan sát danh sách";"Chỉ hiện 2 Student hợp lệ; không nhiễu bởi thiết bị lạ."
+TC35;Chế độ tiết kiệm pin trên Lecturer;Battery Saver ON trên Lecturer (Android);"1) Bắt đầu quét
+2) Tắt màn hình trong 20s rồi bật lại";"Quét không bị dừng; nếu bị hệ thống hạn chế, app hiển thị hướng dẫn tắt tối ưu hóa."
+TC36;Lecturer đang scan thì end session;Session kết thúc sớm ;"1) Mở màn hình lecture
+2) Bắt đầu quét. rồi end session sớm";Hiển thị đúng số round đã quét trước khi end session
+TC37;Lecture cách Studen tầm 10m có độ nhiễu cao;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Hiển thị quét được 2/3 round
+TC38;Student để điện thoại trong ngăn kéo tủ ;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Quét thành công student ở trong ngăn kéo tủ
+TC39;Đặt thiết bị lecture ở cạnh thiết bị có độ nhiễu cao ;2 thiết bị học sinh cách 5m ;;Không quét được học sinh nào
+TC40;Đặt thiết bị lecture ở cạnh thiết bị có độ nhiễu cao ;2 thiết bị học sinh cách tầm 2m ;;Hiển thị đúng số round đã quét trước khi end session
+TC41;Đạt thiết bị thành 1 đường thẳng cách đều 6m lecture ở giữa;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Hiển thị đúng số round đã quét trước khi end session
+TC42;Đạt thiết bị thành 1 đường thẳng cách đều 6m lecture ở đầu;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Bắt được tín hiệu của stu1 cách 6m 2 lần còn stu2 thì đc 1 lần
+TC43;Để thiết bị lecture quét cầm dth sau đi qua lại nhiều nơi;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Hiển thị đúng số round đã quét trước khi end session
+TC44;Để thiết bị lecture nhưng student cách xa 10m góc khuất;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Tín hiệu kém chập chờn, tỉ lệ quét được không cao nhưng có xác xuất vẫn quét được
+TC45;Để thiết bị lecture pin yếu;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Hiển thị đúng số round đã quét trước khi end session , nhưng hiệu năng của thiết bị lecture hơi lag
+TC46;Để chế độ tiết kiệm pin;Cả 2 thiết bị đã ở chế độ chuẩn bị để bấm quét;;Không ảnh hưởng đến điểm danh
