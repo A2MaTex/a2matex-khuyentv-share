@@ -1,0 +1,249 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="100%" height="100%" style="background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Shadows -->
+    <filter id="shadow-soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+    <filter id="shadow-core" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#ea580c" flood-opacity="0.25" />
+    </filter>
+    <filter id="shadow-card" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.1" />
+    </filter>
+
+    <!-- Gradients -->
+    <radialGradient id="interior-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ecfeff" stop-opacity="0.9" />
+      <stop offset="70%" stop-color="#cffafe" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#a5f3fc" stop-opacity="0.85" />
+    </radialGradient>
+
+    <linearGradient id="core-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c" />
+      <stop offset="50%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+
+    <!-- Markers -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7" />
+    </marker>
+    <marker id="arrow-dark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ea580c" />
+    </marker>
+  </defs>
+
+  <!-- Title & Legend Header -->
+  <text x="600" y="45" text-anchor="middle" font-size="24" font-weight="800" fill="#0f172a" letter-spacing="-0.5">A2MaTex - System Context Diagram (Interior / Exterior Scope)</text>
+  <text x="600" y="72" text-anchor="middle" font-size="13" font-weight="500" fill="#64748b">Android Device Automation &amp; Distribution Platform Ecosystem</text>
+
+  <!-- ==================== LARGE INTERIOR BOUNDARY CIRCLE ==================== -->
+  <circle cx="600" cy="610" r="410" fill="url(#interior-bg)" stroke="#0891b2" stroke-width="2.5" stroke-dasharray="8 6" filter="url(#shadow-soft)" />
+
+  <!-- Scope Labels (Interior vs Exterior) -->
+  <g transform="translate(860, 245)">
+    <rect x="-10" y="-18" width="115" height="32" rx="6" fill="#0e7490" />
+    <text x="47" y="3" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff" letter-spacing="1">INTERIOR</text>
+  </g>
+  <g transform="translate(1005, 245)">
+    <rect x="-10" y="-18" width="120" height="32" rx="6" fill="#be123c" />
+    <text x="50" y="3" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff" letter-spacing="1">EXTERIOR</text>
+  </g>
+  <line x1="975" y1="230" x2="995" y2="260" stroke="#94a3b8" stroke-width="2" />
+
+  <!-- ==================== DATA FLOWS (ARROWS) ==================== -->
+  <!-- Note: Background labels use small white badges for supreme legibility -->
+
+  <!-- 1. ANDROID DEVICES (Top Left) Flows -->
+  <!-- Deployment (Core -> Device) -->
+  <path d="M 525 540 C 420 460 300 380 235 250" fill="none" stroke="#475569" stroke-width="1.8" marker-end="url(#arrow-dark)" />
+  <rect x="250" y="400" width="150" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="325" y="414" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">ADB command stream &amp; APKs</text>
+
+  <!-- Execution Results (Device -> Core) -->
+  <path d="M 245 265 C 290 390 400 480 515 560" fill="none" stroke="#475569" stroke-width="1.8" marker-end="url(#arrow-dark)" />
+  <rect x="330" y="465" width="145" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="402" y="479" text-anchor="middle" font-size="10.5" font-weight="600" fill="#334155">Execution results &amp; logs</text>
+
+  <!-- Device Status (Device -> Core) -->
+  <path d="M 190 270 C 180 390 270 540 500 600" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-dark)" />
+  <rect x="230" y="525" width="125" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="292" y="539" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">Device availability &amp; info</text>
+
+  <!-- 2. ADMIN (Top Right) Flows -->
+  <!-- Pending submissions (Core -> Admin) -->
+  <path d="M 685 540 C 780 460 880 370 965 245" fill="none" stroke="#475569" stroke-width="1.8" marker-end="url(#arrow-dark)" />
+  <rect x="780" y="385" width="130" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="845" y="399" text-anchor="middle" font-size="10.5" font-weight="600" fill="#334155">Pending submissions</text>
+
+  <!-- System status & Alert (Core -> Admin) -->
+  <path d="M 700 565 C 810 500 910 400 985 255" fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-dark)" />
+  <rect x="835" y="435" width="140" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="905" y="449" text-anchor="middle" font-size="10.5" font-weight="600" fill="#334155">System alerts &amp; stats</text>
+
+  <!-- Review Decisions & Moderation (Admin -> Core) -->
+  <path d="M 950 250 C 865 370 770 480 690 580" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrow)" />
+  <rect x="760" y="485" width="160" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="840" y="499" text-anchor="middle" font-size="10" font-weight="600" fill="#0369a1">Review decisions &amp; directives</text>
+
+  <!-- 3. PUBLISHER (Bottom Left) Flows -->
+  <!-- Workflow Project & Publication (Publisher -> Core) -->
+  <path d="M 235 910 C 310 820 420 730 520 665" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrow)" />
+  <rect x="290" y="760" width="180" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="380" y="774" text-anchor="middle" font-size="10" font-weight="600" fill="#0369a1">Workflow graphs &amp; submission</text>
+
+  <!-- Demo execution request (Publisher -> Core) -->
+  <path d="M 255 935 C 360 860 450 770 535 685" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arrow)" />
+  <rect x="330" y="805" width="160" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="410" y="819" text-anchor="middle" font-size="10" font-weight="600" fill="#0369a1">Local test data &amp; parameters</text>
+
+  <!-- Sale & Revenue Stats (Core -> Publisher) -->
+  <path d="M 505 655 C 410 720 290 820 215 905" fill="none" stroke="#475569" stroke-width="1.8" marker-end="url(#arrow-dark)" />
+  <rect x="260" y="715" width="145" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="332" y="729" text-anchor="middle" font-size="10.5" font-weight="600" fill="#334155">Sales &amp; Coin revenue stats</text>
+
+  <!-- 4. CUSTOMER (Bottom Right) Flows -->
+  <!-- Purchase & Execution Requests (Customer -> Core) -->
+  <path d="M 950 910 C 870 820 770 730 680 665" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrow)" />
+  <rect x="730" y="760" width="180" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="820" y="774" text-anchor="middle" font-size="10" font-weight="600" fill="#0369a1">Purchase orders &amp; run requests</text>
+
+  <!-- Device Selection & Reports (Customer -> Core) -->
+  <path d="M 940 935 C 840 855 740 765 665 685" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arrow)" />
+  <rect x="720" y="805" width="165" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="802" y="819" text-anchor="middle" font-size="10" font-weight="600" fill="#0369a1">Device configs &amp; incident reports</text>
+
+  <!-- Package & License / Status (Core -> Customer) -->
+  <path d="M 695 655 C 790 720 900 815 975 905" fill="none" stroke="#475569" stroke-width="1.8" marker-end="url(#arrow-dark)" />
+  <rect x="800" y="715" width="165" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="882" y="729" text-anchor="middle" font-size="10.5" font-weight="600" fill="#334155">Package, License &amp; Status</text>
+
+  <!-- 5. SEPAY (Bottom Center) Flows -->
+  <!-- Payment Request (Core -> SePay) -->
+  <path d="M 585 710 C 585 820 585 910 585 985" fill="none" stroke="#ea580c" stroke-width="1.8" marker-end="url(#arrow-orange)" />
+  <rect x="460" y="870" width="125" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="522" y="884" text-anchor="middle" font-size="10" font-weight="600" fill="#ea580c">VietQR payment requests</text>
+
+  <!-- Payment Confirmation (SePay -> Core) -->
+  <path d="M 615 985 C 615 910 615 820 615 710" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrow)" />
+  <rect x="620" y="870" width="135" height="20" rx="4" fill="#ffffff" opacity="0.92" />
+  <text x="687" y="884" text-anchor="middle" font-size="10" font-weight="600" fill="#0284c7">IPN webhook notifications</text>
+
+  <!-- 6. INTERIOR SUBSYSTEM FLOWS (Light Curved Lines) -->
+  <!-- Core <-> Marketplace -->
+  <path d="M 565 525 C 555 450 555 410 560 380" fill="none" stroke="#0e7490" stroke-width="1.5" stroke-dasharray="3 3" />
+  <!-- Core <-> License/Lease -->
+  <path d="M 690 590 C 730 580 760 575 790 570" fill="none" stroke="#0e7490" stroke-width="1.5" stroke-dasharray="3 3" />
+  <!-- Core <-> Wallet -->
+  <path d="M 645 690 C 665 715 690 735 720 745" fill="none" stroke="#0e7490" stroke-width="1.5" stroke-dasharray="3 3" />
+  <!-- Core <-> Security Scanner -->
+  <path d="M 515 595 C 475 585 440 580 410 575" fill="none" stroke="#0e7490" stroke-width="1.5" stroke-dasharray="3 3" />
+
+  <!-- ==================== INTERIOR NODES (WHITE CARDS) ==================== -->
+  <!-- Interior Card 1: Marketplace & Catalog -->
+  <g transform="translate(510, 310)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="180" height="68" rx="10" fill="#ffffff" stroke="#06b6d4" stroke-width="1.8" />
+    <path d="M 0 10 Q 0 0 10 0 L 170 0 Q 180 0 180 10 L 180 18 L 0 18 Z" fill="#e0f2fe" />
+    <text x="90" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Marketplace &amp; Catalog</text>
+    <text x="90" y="54" text-anchor="middle" font-size="10" font-weight="500" fill="#64748b">Web Listings &amp; Storefront</text>
+  </g>
+
+  <!-- Interior Card 2: License & Execution Lease -->
+  <g transform="translate(790, 540)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="180" height="68" rx="10" fill="#ffffff" stroke="#06b6d4" stroke-width="1.8" />
+    <path d="M 0 10 Q 0 0 10 0 L 170 0 Q 180 0 180 10 L 180 18 L 0 18 Z" fill="#e0f2fe" />
+    <text x="90" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">License &amp; Lease Engine</text>
+    <text x="90" y="54" text-anchor="middle" font-size="10" font-weight="500" fill="#64748b">Entitlement &amp; Lease Tokens</text>
+  </g>
+
+  <!-- Interior Card 3: Wallet & Coin System -->
+  <g transform="translate(700, 740)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="175" height="68" rx="10" fill="#ffffff" stroke="#06b6d4" stroke-width="1.8" />
+    <path d="M 0 10 Q 0 0 10 0 L 165 0 Q 175 0 175 10 L 175 18 L 0 18 Z" fill="#e0f2fe" />
+    <text x="87" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Wallet &amp; Coin System</text>
+    <text x="87" y="54" text-anchor="middle" font-size="10" font-weight="500" fill="#64748b">Internal Ledger &amp; Payouts</text>
+  </g>
+
+  <!-- Interior Card 4: Automated Security Scanner -->
+  <g transform="translate(230, 540)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="180" height="68" rx="10" fill="#ffffff" stroke="#06b6d4" stroke-width="1.8" />
+    <path d="M 0 10 Q 0 0 10 0 L 170 0 Q 180 0 180 10 L 180 18 L 0 18 Z" fill="#e0f2fe" />
+    <text x="90" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Automated Scanner</text>
+    <text x="90" y="54" text-anchor="middle" font-size="10" font-weight="500" fill="#64748b">AST &amp; Malware Screening</text>
+  </g>
+
+  <!-- ==================== CENTER CORE (ORANGE CIRCLE) ==================== -->
+  <g transform="translate(600, 610)">
+    <circle cx="0" cy="0" r="105" fill="url(#core-gradient)" stroke="#ffffff" stroke-width="4" filter="url(#shadow-core)" />
+    <!-- Core Icon / Badge -->
+    <circle cx="0" cy="-45" r="18" fill="#ffffff" opacity="0.25" />
+    <path d="M -8 -45 L 8 -45 M 0 -53 L 0 -37" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+    <text x="0" y="-12" text-anchor="middle" font-size="20" font-weight="800" fill="#ffffff" letter-spacing="-0.5">A2MaTex</text>
+    <text x="0" y="10" text-anchor="middle" font-size="12" font-weight="700" fill="#ffedd5">Core Platform</text>
+    <text x="0" y="32" text-anchor="middle" font-size="9" font-weight="500" fill="#ffffff" opacity="0.9">Android Automation &amp;</text>
+    <text x="0" y="46" text-anchor="middle" font-size="9" font-weight="500" fill="#ffffff" opacity="0.9">Distribution Platform</text>
+  </g>
+
+  <!-- ==================== EXTERIOR NODES (CALLOUT BOXES) ==================== -->
+
+  <!-- Exterior 1: Android Devices (Top Left) -->
+  <g transform="translate(80, 150)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="190" height="90" rx="12" fill="#fff1f2" stroke="#f43f5e" stroke-width="2" />
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#ffe4e6" />
+    <!-- Phone Icon -->
+    <rect x="21" y="18" width="14" height="20" rx="2" fill="none" stroke="#e11d48" stroke-width="2" />
+    <circle cx="28" cy="34" r="1" fill="#e11d48" />
+    <text x="54" y="33" font-size="15" font-weight="800" fill="#881337">Android Devices</text>
+    <text x="16" y="62" font-size="11" font-weight="600" fill="#9f1239">• Physical Devices</text>
+    <text x="16" y="77" font-size="11" font-weight="600" fill="#9f1239">• LDPlayer Emulators</text>
+  </g>
+
+  <!-- Exterior 2: Admin (Top Right) -->
+  <g transform="translate(930, 150)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="190" height="90" rx="12" fill="#fff1f2" stroke="#f43f5e" stroke-width="2" />
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#ffe4e6" />
+    <!-- Shield / Admin Icon -->
+    <path d="M 28 17 L 38 21 C 38 31 28 37 28 37 C 28 37 18 31 18 21 Z" fill="none" stroke="#e11d48" stroke-width="2" />
+    <text x="54" y="33" font-size="16" font-weight="800" fill="#881337">Admin</text>
+    <text x="16" y="62" font-size="11" font-weight="600" fill="#9f1239">• Reviewers &amp; Auditors</text>
+    <text x="16" y="77" font-size="11" font-weight="600" fill="#9f1239">• System Operators</text>
+  </g>
+
+  <!-- Exterior 3: Publisher (Bottom Left) -->
+  <g transform="translate(80, 910)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="190" height="90" rx="12" fill="#fff1f2" stroke="#f43f5e" stroke-width="2" />
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#ffe4e6" />
+    <!-- Code/Creator Icon -->
+    <path d="M 23 23 L 17 28 L 23 33 M 33 23 L 39 28 L 33 33" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" />
+    <text x="54" y="33" font-size="16" font-weight="800" fill="#881337">Publisher</text>
+    <text x="16" y="62" font-size="11" font-weight="600" fill="#9f1239">• Workflow Authors</text>
+    <text x="16" y="77" font-size="11" font-weight="600" fill="#9f1239">• Script Developers</text>
+  </g>
+
+  <!-- Exterior 4: Customer (Bottom Right) -->
+  <g transform="translate(930, 910)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="190" height="90" rx="12" fill="#fff1f2" stroke="#f43f5e" stroke-width="2" />
+    <rect x="12" y="12" width="32" height="32" rx="8" fill="#ffe4e6" />
+    <!-- User Icon -->
+    <circle cx="28" cy="24" r="5" fill="none" stroke="#e11d48" stroke-width="2" />
+    <path d="M 18 36 C 18 31 22 29 28 29 C 34 29 38 31 38 36" fill="none" stroke="#e11d48" stroke-width="2" />
+    <text x="54" y="33" font-size="16" font-weight="800" fill="#881337">Customer</text>
+    <text x="16" y="62" font-size="11" font-weight="600" fill="#9f1239">• Automation Buyers</text>
+    <text x="16" y="77" font-size="11" font-weight="600" fill="#9f1239">• Tool Operators</text>
+  </g>
+
+  <!-- Exterior 5: SePay Payment Gateway (Bottom Center) -->
+  <g transform="translate(505, 995)" filter="url(#shadow-card)">
+    <rect x="0" y="0" width="190" height="85" rx="12" fill="#fff1f2" stroke="#f43f5e" stroke-width="2" />
+    <rect x="12" y="10" width="32" height="32" rx="8" fill="#ffe4e6" />
+    <!-- Bank/Payment Icon -->
+    <path d="M 18 24 L 28 17 L 38 24 M 20 25 L 20 33 M 28 25 L 28 33 M 36 25 L 36 33 M 17 35 L 39 35" fill="none" stroke="#e11d48" stroke-width="1.8" />
+    <text x="54" y="31" font-size="15" font-weight="800" fill="#881337">SePay Gateway</text>
+    <text x="16" y="58" font-size="11" font-weight="600" fill="#9f1239">• VietQR / Bank Transfer</text>
+    <text x="16" y="73" font-size="11" font-weight="600" fill="#9f1239">• Instant IPN Webhooks</text>
+  </g>
+
+</svg>

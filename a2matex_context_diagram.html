@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2MaTex - System Context Diagram (Interior vs Exterior)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --border: #e2e8f0;
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-main);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      color: #0f172a;
+    }
+    p.subtitle {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .diagram-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .diagram-card svg {
+      width: 100%;
+      max-width: 1000px;
+      height: auto;
+      border-radius: 12px;
+    }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .badge-interior {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .badge-exterior {
+      background: #ffe4e6;
+      color: #be123c;
+    }
+    .badge-core {
+      background: #ffedd5;
+      color: #c2410c;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .flow-tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>A2MaTex System — Context Diagram (Interior vs Exterior Architecture)</h1>
+      <p class="subtitle">SEP490 Capstone Project (FA26 - G52) • Modeled after the Concentric Enterprise Context Framework</p>
+    </header>
+
+    <div class="diagram-card">
+      <!-- Embed SVG -->
+      <object type="image/svg+xml" data="a2matex_context_diagram_boundary.svg" style="width: 100%; max-width: 1000px; height: auto;"></object>
+    </div>
+
+    <h2>Architectural Breakdown &amp; Scope Specification</h2>
+    <div class="specs-grid">
+      <!-- Core -->
+      <div class="card">
+        <h3><span class="badge badge-core">Core System</span> A2MaTex Core Platform</h3>
+        <p style="font-size: 14px; color: #475569;">Hạt nhân trung tâm điều phối toàn bộ hệ thống A2MaTex:</p>
+        <ul>
+          <li>Lưu trữ &amp; đóng băng bản phát hành kịch bản bất biến (<span class="flow-tag">.a2m</span>).</li>
+          <li>Xác thực bản quyền &amp; cấp phát <span class="flow-tag">Execution Lease Token</span>.</li>
+          <li>Điều phối các kênh giao tiếp bảo mật với Runtime Agent và LDPlayer.</li>
+        </ul>
+      </div>
+
+      <!-- Interior Subsystems -->
+      <div class="card">
+        <h3><span class="badge badge-interior">Interior Subsystem</span> Internal Services</h3>
+        <p style="font-size: 14px; color: #475569;">Các phân hệ nội bộ phối hợp trực tiếp với Core Platform:</p>
+        <ul>
+          <li><strong>Marketplace &amp; Catalog:</strong> Web Storefront, danh mục công cụ, siêu dữ liệu.</li>
+          <li><strong>License &amp; Lease Engine:</strong> Quản lý quyền sở hữu (Entitlement) và kiểm soát số máy chạy đồng thời.</li>
+          <li><strong>Wallet &amp; Coin System:</strong> Ví Coin nội bộ, giao dịch nguyên tử (Atomic transaction), nạp rút và phí sàn.</li>
+          <li><strong>Automated Scanner:</strong> Phân tích tĩnh AST &amp; quét chữ ký độc hại.</li>
+        </ul>
+      </div>
+
+      <!-- Exterior Entities -->
+      <div class="card">
+        <h3><span class="badge badge-exterior">Exterior Entities</span> Stakeholders &amp; Endpoints</h3>
+        <p style="font-size: 14px; color: #475569;">Các tác nhân bên ngoài và môi trường thực thi đích:</p>
+        <ul>
+          <li><strong>Customer:</strong> Mua công cụ, nạp tiền, chọn máy và giám sát kịch bản.</li>
+          <li><strong>Publisher:</strong> Soạn thảo workflow, test local, nộp kịch bản và nhận coin.</li>
+          <li><strong>Admin:</strong> Kiểm duyệt kịch bản, giám sát cảnh báo và cấu hình hệ thống.</li>
+          <li><strong>SePay Gateway:</strong> Cổng thanh toán quét mã VietQR tự động.</li>
+          <li><strong>Android Devices / LDPlayer:</strong> Thiết bị vật lý và máy ảo giả lập Android.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

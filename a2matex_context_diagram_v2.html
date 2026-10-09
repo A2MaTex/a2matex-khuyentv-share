@@ -1,0 +1,470 @@
+<title>A2MaTex Context Diagram</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Space+Mono:wght@400;700&display=swap');
+
+  /* Layout: full-width centered SVG diagram, three concentric zones */
+  :root {
+    --bg: #f7f8fb;
+    --fg: #1a1d2e;
+    --fg-muted: #6b7190;
+    --surface: #ffffff;
+    --border: #d4d8e8;
+    --accent: #3b6cf5;
+    --accent-light: #e8eeff;
+    --interior-bg: #eef3ff;
+    --interior-stroke: #7da1f5;
+    --system-bg: #3b6cf5;
+    --system-fg: #ffffff;
+    --exterior-bg: #fff5f0;
+    --exterior-stroke: #e8644a;
+    --exterior-fg: #9c3420;
+    --arrow-in: #3b6cf5;
+    --arrow-out: #64748b;
+    --arrow-ext: #e8644a;
+    --label-bg: rgba(255,255,255,0.94);
+    --font-display: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1120;
+      --fg: #e2e5f0;
+      --fg-muted: #8b90ab;
+      --surface: #1a1d30;
+      --border: #2e3250;
+      --accent: #6b93ff;
+      --accent-light: #1e2545;
+      --interior-bg: #161a30;
+      --interior-stroke: #4a6ed0;
+      --system-bg: #3b6cf5;
+      --system-fg: #ffffff;
+      --exterior-bg: #251a16;
+      --exterior-stroke: #c05540;
+      --exterior-fg: #f0a090;
+      --arrow-in: #6b93ff;
+      --arrow-out: #8b90ab;
+      --arrow-ext: #e07050;
+      --label-bg: rgba(26,29,48,0.94);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1120;
+    --fg: #e2e5f0;
+    --fg-muted: #8b90ab;
+    --surface: #1a1d30;
+    --border: #2e3250;
+    --accent: #6b93ff;
+    --accent-light: #1e2545;
+    --interior-bg: #161a30;
+    --interior-stroke: #4a6ed0;
+    --system-bg: #3b6cf5;
+    --system-fg: #ffffff;
+    --exterior-bg: #251a16;
+    --exterior-stroke: #c05540;
+    --exterior-fg: #f0a090;
+    --arrow-in: #6b93ff;
+    --arrow-out: #8b90ab;
+    --arrow-ext: #e07050;
+    --label-bg: rgba(26,29,48,0.94);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-display);
+    padding-inline: 16px;
+    padding-block: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+  }
+
+  .diagram-header {
+    text-align: center;
+    padding: 28px 0 8px;
+    max-width: 700px;
+  }
+  .diagram-header h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .diagram-header p {
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px 0 14px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1.5px solid;
+  }
+
+  .diagram-wrap {
+    width: 100%;
+    max-width: 1000px;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .diagram-footer {
+    text-align: center;
+    padding: 14px 0 28px;
+    font-size: 0.72rem;
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+</style>
+
+<div class="diagram-header">
+  <h1>A2MaTex — System Context Diagram</h1>
+  <p>Three-zone architecture view: System core (Backend), Interior modules (Marketplace, Studio, Launcher, Runtime), and Exterior actors &amp; entities</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-swatch" style="background: var(--system-bg); border-color: var(--system-bg);"></div>
+    System
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background: var(--interior-bg); border-color: var(--interior-stroke);"></div>
+    Interior
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background: var(--exterior-bg); border-color: var(--exterior-stroke);"></div>
+    Exterior
+  </div>
+  <div class="legend-item">
+    <svg width="30" height="14"><line x1="0" y1="7" x2="30" y2="7" stroke="var(--arrow-in)" stroke-width="1.8" marker-end="url(#legend-arr)"/><defs><marker id="legend-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 1 L7 4 L0 7z" fill="var(--arrow-in)"/></marker></defs></svg>
+    Data flow
+  </div>
+</div>
+
+<div class="diagram-wrap">
+<figure style="margin:0;">
+<svg viewBox="0 0 1100 1100" role="img" aria-label="A2MaTex system context diagram showing Backend at center, four interior modules (Marketplace, Studio, Launcher, Runtime Agent), and five exterior entities (Admin, Publisher, Customer, Android Devices, SEPay) with labeled data flows between them." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Arrow markers -->
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 1.5 L8.5 5 L0 8.5z" fill="var(--arrow-in)"/>
+    </marker>
+    <marker id="arr-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 1.5 L8.5 5 L0 8.5z" fill="var(--arrow-out)"/>
+    </marker>
+    <marker id="arr-ext" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 1.5 L8.5 5 L0 8.5z" fill="var(--arrow-ext)"/>
+    </marker>
+  </defs>
+
+  <!-- ============ EXTERIOR ZONE (background) ============ -->
+  <rect x="20" y="20" width="1060" height="1060" rx="24" fill="var(--bg)" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="75" y="56" font-family="'Space Mono', monospace" font-size="12" font-weight="700" fill="var(--exterior-fg)" letter-spacing="0.08em">EXTERIOR</text>
+
+  <!-- ============ INTERIOR ZONE ============ -->
+  <rect x="170" y="170" width="760" height="760" rx="380" fill="var(--interior-bg)" stroke="var(--interior-stroke)" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="550" y="218" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="var(--interior-stroke)" letter-spacing="0.1em">INTERIOR</text>
+
+  <!-- ============ SYSTEM CORE (center) ============ -->
+  <circle cx="550" cy="550" r="110" fill="var(--system-bg)" stroke="var(--system-fg)" stroke-width="3.5"/>
+  <text x="550" y="525" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="22" font-weight="700" fill="var(--system-fg)">A2MaTex</text>
+  <text x="550" y="550" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="14" font-weight="600" fill="var(--system-fg)" opacity="0.88">Backend</text>
+  <text x="550" y="575" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" fill="var(--system-fg)" opacity="0.7">NestJS · PostgreSQL</text>
+  <text x="550" y="590" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" fill="var(--system-fg)" opacity="0.7">Redis · S3 Storage</text>
+  <!-- SYSTEM label badge -->
+  <rect x="508" y="600" width="84" height="20" rx="4" fill="var(--system-fg)" opacity="0.2"/>
+  <text x="550" y="614" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" font-weight="700" fill="var(--system-fg)" letter-spacing="0.08em">SYSTEM</text>
+
+  <!-- ============ INTERIOR MODULE CARDS ============ -->
+
+  <!-- 1. Marketplace (Top) -->
+  <g transform="translate(440, 240)">
+    <rect x="0" y="0" width="220" height="68" rx="10" fill="var(--surface)" stroke="var(--interior-stroke)" stroke-width="1.8"/>
+    <rect x="0" y="0" width="220" height="20" rx="10" fill="var(--accent-light)"/>
+    <rect x="0" y="10" width="220" height="10" fill="var(--accent-light)"/>
+    <text x="110" y="14" text-anchor="middle" font-family="'Space Mono', monospace" font-size="8" font-weight="700" fill="var(--interior-stroke)" letter-spacing="0.06em">WEB PORTAL</text>
+    <text x="110" y="42" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Marketplace</text>
+    <text x="110" y="58" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--fg-muted)">Catalog · Listings · Submission</text>
+  </g>
+
+  <!-- 2. Studio / IDE (Left) -->
+  <g transform="translate(195, 470)">
+    <rect x="0" y="0" width="210" height="68" rx="10" fill="var(--surface)" stroke="var(--interior-stroke)" stroke-width="1.8"/>
+    <rect x="0" y="0" width="210" height="20" rx="10" fill="var(--accent-light)"/>
+    <rect x="0" y="10" width="210" height="10" fill="var(--accent-light)"/>
+    <text x="105" y="14" text-anchor="middle" font-family="'Space Mono', monospace" font-size="8" font-weight="700" fill="var(--interior-stroke)" letter-spacing="0.06em">DESKTOP APP</text>
+    <text x="105" y="42" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Studio (IDE)</text>
+    <text x="105" y="58" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--fg-muted)">Visual Workflow Editor</text>
+  </g>
+
+  <!-- 3. Launcher (Right) -->
+  <g transform="translate(695, 470)">
+    <rect x="0" y="0" width="210" height="68" rx="10" fill="var(--surface)" stroke="var(--interior-stroke)" stroke-width="1.8"/>
+    <rect x="0" y="0" width="210" height="20" rx="10" fill="var(--accent-light)"/>
+    <rect x="0" y="10" width="210" height="10" fill="var(--accent-light)"/>
+    <text x="105" y="14" text-anchor="middle" font-family="'Space Mono', monospace" font-size="8" font-weight="700" fill="var(--interior-stroke)" letter-spacing="0.06em">DESKTOP APP</text>
+    <text x="105" y="42" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Launcher</text>
+    <text x="105" y="58" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--fg-muted)">Package · License · Monitor</text>
+  </g>
+
+  <!-- 4. Runtime Agent (Bottom) -->
+  <g transform="translate(440, 740)">
+    <rect x="0" y="0" width="220" height="68" rx="10" fill="var(--surface)" stroke="var(--interior-stroke)" stroke-width="1.8"/>
+    <rect x="0" y="0" width="220" height="20" rx="10" fill="var(--accent-light)"/>
+    <rect x="0" y="10" width="220" height="10" fill="var(--accent-light)"/>
+    <text x="110" y="14" text-anchor="middle" font-family="'Space Mono', monospace" font-size="8" font-weight="700" fill="var(--interior-stroke)" letter-spacing="0.06em">GO DAEMON</text>
+    <text x="110" y="42" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Runtime Agent</text>
+    <text x="110" y="58" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--fg-muted)">ADB Engine · Multi-device</text>
+  </g>
+
+  <!-- ============ EXTERIOR ENTITY CARDS ============ -->
+
+  <!-- Admin (Top-Right) -->
+  <g transform="translate(850, 50)">
+    <rect x="0" y="0" width="195" height="80" rx="10" fill="var(--exterior-bg)" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <!-- Shield icon -->
+    <path d="M 26 22 L 36 18 C 38 28 28 36 26 36 C 24 36 14 28 16 18 Z" fill="none" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <text x="50" y="32" font-family="'DM Sans', sans-serif" font-size="15" font-weight="700" fill="var(--exterior-fg)">Admin</text>
+    <text x="14" y="54" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• Review &amp; Moderation</text>
+    <text x="14" y="68" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• System Management</text>
+  </g>
+
+  <!-- Publisher (Bottom-Left) -->
+  <g transform="translate(40, 920)">
+    <rect x="0" y="0" width="195" height="80" rx="10" fill="var(--exterior-bg)" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <!-- Code icon -->
+    <path d="M 20 25 L 14 30 L 20 35 M 32 25 L 38 30 L 32 35" fill="none" stroke="var(--exterior-stroke)" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="50" y="34" font-family="'DM Sans', sans-serif" font-size="15" font-weight="700" fill="var(--exterior-fg)">Publisher</text>
+    <text x="14" y="54" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• Workflow Authors</text>
+    <text x="14" y="68" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• Script Developers</text>
+  </g>
+
+  <!-- Customer (Bottom-Right) -->
+  <g transform="translate(865, 920)">
+    <rect x="0" y="0" width="195" height="80" rx="10" fill="var(--exterior-bg)" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <!-- User icon -->
+    <circle cx="26" cy="24" r="5" fill="none" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <path d="M 16 36 C 16 31 20 29 26 29 C 32 29 36 31 36 36" fill="none" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <text x="50" y="34" font-family="'DM Sans', sans-serif" font-size="15" font-weight="700" fill="var(--exterior-fg)">Customer</text>
+    <text x="14" y="54" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• Automation Buyers</text>
+    <text x="14" y="68" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• Tool Operators</text>
+  </g>
+
+  <!-- Android Devices (Top-Left) -->
+  <g transform="translate(40, 50)">
+    <rect x="0" y="0" width="195" height="80" rx="10" fill="var(--exterior-bg)" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <!-- Phone icon -->
+    <rect x="18" y="18" width="16" height="24" rx="2.5" fill="none" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <circle cx="26" cy="38" r="1.5" fill="var(--exterior-stroke)"/>
+    <text x="46" y="34" font-family="'DM Sans', sans-serif" font-size="14" font-weight="700" fill="var(--exterior-fg)">Android Devices</text>
+    <text x="14" y="54" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• LDPlayer Emulators</text>
+    <text x="14" y="68" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• Physical Phones</text>
+  </g>
+
+  <!-- SEPay (Bottom-Center) -->
+  <g transform="translate(435, 1000)">
+    <rect x="0" y="0" width="230" height="75" rx="10" fill="var(--exterior-bg)" stroke="var(--exterior-stroke)" stroke-width="1.8"/>
+    <!-- Bank icon -->
+    <path d="M 18 28 L 28 20 L 38 28 M 20 30 L 20 38 M 28 30 L 28 38 M 36 30 L 36 38 M 17 40 L 39 40" fill="none" stroke="var(--exterior-stroke)" stroke-width="1.6"/>
+    <text x="52" y="33" font-family="'DM Sans', sans-serif" font-size="14" font-weight="700" fill="var(--exterior-fg)">SEPay Gateway</text>
+    <text x="14" y="52" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• VietQR / Bank Transfer</text>
+    <text x="14" y="65" font-family="'DM Sans', sans-serif" font-size="10" fill="var(--exterior-fg)">• IPN Webhooks</text>
+  </g>
+
+
+  <!-- ============================================================ -->
+  <!-- DATA FLOW ARROWS: Interior ↔ System (Backend)                -->
+  <!-- ============================================================ -->
+
+  <!-- Marketplace ↔ Backend -->
+  <!-- Marketplace → Backend: Product listings, Submissions -->
+  <line x1="520" y1="308" x2="510" y2="445" stroke="var(--arrow-in)" stroke-width="1.6" marker-end="url(#arr-blue)"/>
+  <rect x="450" y="358" width="115" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="508" y="371" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-in)">Listings, Submissions</text>
+
+  <!-- Backend → Marketplace: Catalog data, Review status -->
+  <line x1="580" y1="445" x2="590" y2="308" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="583" y="358" width="115" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="640" y="371" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Catalog, Review status</text>
+
+  <!-- Studio ↔ Backend -->
+  <!-- Studio → Backend: Project sync, Assets upload -->
+  <line x1="405" y1="496" x2="443" y2="520" stroke="var(--arrow-in)" stroke-width="1.6" marker-end="url(#arr-blue)"/>
+  <rect x="350" y="478" width="105" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="402" y="491" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-in)">Project sync, Assets</text>
+
+  <!-- Backend → Studio: Node defs, Capabilities -->
+  <line x1="443" y1="546" x2="405" y2="522" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="340" y="540" width="115" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="397" y="553" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Node defs, Capabilities</text>
+
+  <!-- Launcher ↔ Backend -->
+  <!-- Launcher → Backend: Lease requests, Installation reg -->
+  <line x1="695" y1="496" x2="657" y2="520" stroke="var(--arrow-in)" stroke-width="1.6" marker-end="url(#arr-blue)"/>
+  <rect x="642" y="478" width="120" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="702" y="491" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-in)">Lease req, Installation</text>
+
+  <!-- Backend → Launcher: Entitlements, Presigned URLs -->
+  <line x1="657" y1="546" x2="695" y2="522" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="645" y="540" width="128" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="709" y="553" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Entitlements, Package URL</text>
+
+  <!-- Runtime ↔ Backend -->
+  <!-- Runtime → Backend: Lease validation, Execution reports -->
+  <line x1="520" y1="740" x2="510" y2="660" stroke="var(--arrow-in)" stroke-width="1.6" marker-end="url(#arr-blue)"/>
+  <rect x="440" y="688" width="130" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="505" y="701" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-in)">Lease validate, Reports</text>
+
+  <!-- Backend → Runtime: Workflow key, Lease token -->
+  <line x1="590" y1="660" x2="580" y2="740" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="577" y="688" width="120" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="637" y="701" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Workflow key, Lease</text>
+
+
+  <!-- ============================================================ -->
+  <!-- DATA FLOW ARROWS: Interior module ↔ Interior module          -->
+  <!-- ============================================================ -->
+
+  <!-- Studio → Runtime (Dev Mode local test) -->
+  <path d="M 300 538 C 340 640 400 720 440 760" fill="none" stroke="var(--interior-stroke)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-blue)"/>
+  <rect x="250" y="660" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="332" y="673" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--interior-stroke)">Local test workflow payloads</text>
+
+  <!-- Launcher → Runtime (HTTP IPC / WebSocket) -->
+  <path d="M 695 510 C 680 580 680 680 660 740" fill="none" stroke="var(--interior-stroke)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-blue)"/>
+  <rect x="650" y="630" width="125" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="712" y="643" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--interior-stroke)">IPC commands &amp; profiles</text>
+
+  <!-- Runtime → Launcher (Execution events) -->
+  <path d="M 660 770 C 710 710 740 640 760 538" fill="none" stroke="var(--interior-stroke)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-blue)"/>
+  <rect x="705" y="660" width="135" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="772" y="673" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--interior-stroke)">Execution events &amp; live logs</text>
+
+
+  <!-- ============================================================ -->
+  <!-- DATA FLOW ARROWS: Exterior ↔ Interior                        -->
+  <!-- ============================================================ -->
+
+  <!-- ── Admin ↔ Marketplace ── -->
+  <!-- Admin → Marketplace: Review decisions, Moderation directives -->
+  <path d="M 900 130 C 820 170 720 220 660 248" fill="none" stroke="var(--arrow-ext)" stroke-width="1.6" marker-end="url(#arr-ext)"/>
+  <rect x="680" y="162" width="185" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="772" y="175" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">Review decisions &amp; directives</text>
+
+  <!-- Marketplace → Admin: Pending submissions, Stats -->
+  <path d="M 660 260 C 740 230 830 190 900 140" fill="none" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="710" y="198" width="185" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="802" y="211" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Pending submissions &amp; metrics</text>
+
+  <!-- ── Publisher ↔ Studio ── -->
+  <!-- Publisher → Studio: Workflow graph data, node configuration -->
+  <path d="M 175 920 C 210 820 240 700 270 538" fill="none" stroke="var(--arrow-ext)" stroke-width="1.6" marker-end="url(#arr-ext)"/>
+  <rect x="125" y="740" width="175" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="212" y="753" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">Workflow graphs &amp; node configs</text>
+
+  <!-- Studio → Publisher: Test results, Compilation status -->
+  <path d="M 290 538 C 260 700 230 820 200 920" fill="none" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="130" y="790" width="175" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="217" y="803" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Test results &amp; compiled IR status</text>
+
+  <!-- ── Publisher ↔ Marketplace (Web Submit) ── -->
+  <!-- Publisher → Marketplace: Submission dossier -->
+  <path d="M 195 920 C 280 740 380 500 450 308" fill="none" stroke="var(--arrow-ext)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-ext)"/>
+  <rect x="250" y="590" width="160" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="330" y="603" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">Script submission dossiers</text>
+
+  <!-- Marketplace → Publisher: Revenue stats, Coin balance -->
+  <path d="M 460 308 C 390 500 300 740 215 920" fill="none" stroke="var(--arrow-out)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-grey)"/>
+  <rect x="290" y="640" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="372" y="653" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Revenue reports &amp; Coin balance</text>
+
+  <!-- ── Customer ↔ Marketplace ── -->
+  <!-- Customer → Marketplace: Search queries, purchase order data -->
+  <path d="M 910 920 C 830 740 730 500 660 308" fill="none" stroke="var(--arrow-ext)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-ext)"/>
+  <rect x="725" y="590" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="807" y="603" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">Search queries &amp; purchase orders</text>
+
+  <!-- Marketplace → Customer: Product catalog, Entitlement -->
+  <path d="M 650 308 C 720 500 810 740 890 920" fill="none" stroke="var(--arrow-out)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-grey)"/>
+  <rect x="735" y="640" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="817" y="653" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Product catalog &amp; entitlements</text>
+
+  <!-- ── Customer ↔ Launcher ── -->
+  <!-- Customer → Launcher: Device configs, run commands -->
+  <path d="M 940 920 C 920 780 900 650 870 538" fill="none" stroke="var(--arrow-ext)" stroke-width="1.6" marker-end="url(#arrow-ext)"/>
+  <rect x="845" y="740" width="175" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="932" y="753" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">Device configs &amp; run directives</text>
+
+  <!-- Launcher → Customer: Execution progress, Status -->
+  <path d="M 890 538 C 910 650 930 780 960 920" fill="none" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="870" y="790" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="952" y="803" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Progress, telemetry &amp; live logs</text>
+
+  <!-- ── Android Devices ↔ Runtime Agent ── -->
+  <!-- Runtime → Devices: ADB command stream -->
+  <path d="M 480 760 C 380 820 250 780 160 130" fill="none" stroke="var(--arrow-ext)" stroke-width="1.6" marker-end="url(#arr-ext)"/>
+  <rect x="140" y="460" width="155" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="217" y="473" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">ADB command stream &amp; APKs</text>
+
+  <!-- Devices → Runtime: Screen frames, UI hierarchy dump -->
+  <path d="M 140 130 C 220 780 360 830 460 770" fill="none" stroke="var(--arrow-out)" stroke-width="1.6" marker-end="url(#arr-grey)"/>
+  <rect x="95" y="520" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="177" y="533" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-out)">Screen frame buffers &amp; state</text>
+
+  <!-- ── SEPay ↔ Backend (through interior boundary) ── -->
+  <!-- Backend → SEPay: VietQR payment initiation -->
+  <line x1="525" y1="660" x2="510" y2="1000" stroke="var(--arrow-ext)" stroke-width="1.6" marker-end="url(#arrow-ext)"/>
+  <rect x="425" y="860" width="155" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="502" y="873" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-ext)">VietQR payment pay request</text>
+
+  <!-- SEPay → Backend: IPN confirmation webhook -->
+  <line x1="590" y1="1000" x2="575" y2="660" stroke="var(--arrow-in)" stroke-width="1.6" marker-end="url(#arr-blue)"/>
+  <rect x="555" y="860" width="165" height="18" rx="3" fill="var(--label-bg)"/>
+  <text x="637" y="873" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="var(--arrow-in)">IPN confirmation webhooks</text>
+
+</svg>
+<figcaption style="text-align:center; font-size:0.78rem; color:var(--fg-muted); margin-top:10px; font-style:italic;">
+  Concentric System Context Diagram showing System Core (Cloud Backend), Interior Subsystems (Marketplace, Studio, Launcher, Runtime Agent), and Exterior Actors &amp; Entities.
+</figcaption>
+
+</svg>
+<figcaption style="text-align:center; font-size:0.78rem; color:var(--fg-muted); margin-top:10px; font-style:italic;">
+  Context Diagram thể hiện ranh giới 3 tầng: System (Backend Cloud), Interior (4 module nội bộ) và Exterior (Actors &amp; External Entities).
+</figcaption>
+</figure>
+</div>
+
+<div class="diagram-footer">
+  SEP490 · FA26 · G52 — A2MaTex Ecosystem · v2.0
+</div>
