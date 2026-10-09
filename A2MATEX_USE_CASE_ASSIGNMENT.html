@@ -4527,9 +4527,79 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
 </tbody>
 </table>
 <hr>
-<h2 id="iv-sơ-đồ-use-case-tổng-thể-theo-từng-vai-trò-use-case-diagrams-by-role">IV. SƠ ĐỒ USE CASE TỔNG THỂ THEO TỪNG VAI TRÒ (USE CASE DIAGRAMS BY ROLE) </h2>
-<p>Dưới đây là 4 sơ đồ Use Case UML chuẩn hóa theo từng vai trò (Role-based Use Case Diagrams) tương tác trong hệ sinh thái A2MaTex, sẵn sàng phục vụ báo cáo bảo vệ đồ án tốt nghiệp:</p>
-<h3 id="1-sơ-đồ-use-case-cho-vai-trò-guest-khách-vãng-lai">1. Sơ đồ Use Case cho vai trò Guest (Khách vãng lai) </h3>
+<h2 id="iv-sơ-đồ-use-case-chuẩn-hóa-uml-25-use-case-diagrams">IV. SƠ ĐỒ USE CASE CHUẨN HÓA (UML 2.5 USE CASE DIAGRAMS) </h2>
+<blockquote>
+<p><strong>Quy chuẩn phương pháp luận áp dụng (Tuân thủ nghiêm ngặt 5 nguyên tắc chuẩn BA &amp; UML 2.5):</strong></p>
+<ol>
+<li><strong>Goal-oriented Use Cases (Hướng mục tiêu nghiệp vụ):</strong> Từng Use Case đại diện cho một mục tiêu nghiệp vụ trọn vẹn mang lại giá trị đo lường được cho Actor; tuyệt đối loại bỏ các thao tác bấm nút UI vụn vặt và hành vi ngầm của hệ thống.</li>
+<li><strong>No Time Sequence (Không vẽ theo thứ tự thời gian):</strong> Sơ đồ Use Case không phải Activity Diagram, không dùng mũi tên nối bước 1 sang bước 2. Mối quan hệ giữa các Use Case chỉ bao gồm <code>&lt;&lt;include&gt;&gt;</code>, <code>&lt;&lt;extend&gt;&gt;</code> và <code>Generalization</code>.</li>
+<li><strong>Chuẩn hóa quan hệ <code>&lt;&lt;include&gt;&gt;</code> và <code>&lt;&lt;extend&gt;&gt;</code>:</strong>
+<ul>
+<li><code>&lt;&lt;include&gt;&gt;</code>: Trỏ từ Base Use Case → Included Use Case (phần việc bắt buộc phải chạy và có tính tái sử dụng). Loại bỏ triệt để việc nối include auto-save hay đăng nhập bừa bãi.</li>
+<li><code>&lt;&lt;extend&gt;&gt;</code>: Trỏ từ Extension Use Case → Base Use Case (chỉ kích hoạt có điều kiện tại <em>Extension Point</em>, ví dụ: nạp thêm coin khi số dư không đủ).</li>
+</ul>
+</li>
+<li><strong>Phân cấp Actor &amp; Ranh giới Actor ngoài (Actor Generalization &amp; External Systems):</strong> <code>Customer</code> kế thừa từ <code>Guest</code>, <code>Publisher</code> kế thừa từ <code>Customer</code>. Các hệ thống bên thứ 3 (<code>Google Identity</code>, <code>Payment Gateway SEPay</code>, <code>LDPlayer Console</code>) được định danh là Secondary/Supporting Actors và đặt ngoài ranh giới hệ thống.</li>
+<li><strong>System Boundary rõ ràng:</strong> Khung ranh giới phân định rõ phạm vi trách nhiệm của hệ thống A2MaTex với môi trường bên ngoài.</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="1-sơ-đồ-use-case-tổng-thể-hệ-sinh-thái-a2matex-high-level-system-overview-diagram">1. Sơ đồ Use Case Tổng thể Hệ sinh thái A2MaTex (High-Level System Overview Diagram) </h3>
+<div class="mermaid">flowchart TB
+    classDef actor fill:#f8fafc,stroke:#334155,stroke-width:2px,font-weight:bold;
+    classDef usecase fill:#f0fdf4,stroke:#16a34a,stroke-width:1.5px;
+    classDef external fill:#fff7ed,stroke:#ea580c,stroke-width:2px,stroke-dasharray: 4 4;
+
+    Guest["👤 Guest&lt;br&gt;(Khách vãng lai)"]:::actor
+    Customer["👤 Customer&lt;br&gt;(Khách hàng mua và chạy)"]:::actor
+    Publisher["👤 Publisher&lt;br&gt;(Tác giả kịch bản)"]:::actor
+    Admin["👤 Administrator&lt;br&gt;(Quản trị viên)"]:::actor
+
+    Customer -.->|Kế thừa| Guest
+    Publisher -.->|Kế thừa| Customer
+
+    GoogleAuth["🌐 Google Identity&lt;br&gt;(External OAuth)"]:::external
+    PaymentGateway["🏦 SEPay Gateway&lt;br&gt;(VietQR IPN Webhook)"]:::external
+    LDPlayer["📱 LDPlayer / ADB&lt;br&gt;(Target Execution)"]:::external
+
+    subgraph A2MaTex_System["Ranh giới Hệ thống A2MaTex (System Boundary)"]
+        UC_G_AUTH(["Đăng ký, Đăng nhập và Xác thực"]):::usecase
+        UC_G_CATALOG(["Khám phá và Xem danh mục kịch bản"]):::usecase
+
+        UC_C_COMMERCE(["Mua kịch bản và Quản lý bản quyền"]):::usecase
+        UC_C_WALLET(["Nạp Coin và Quản lý ví"]):::usecase
+        UC_C_EXEC(["Cấu hình và Thực thi kịch bản trên máy"]):::usecase
+
+        UC_P_DESIGN(["Thiết kế kịch bản Visual Workflow"]):::usecase
+        UC_P_TEST(["Kiểm thử kịch bản cục bộ (Dev Mode)"]):::usecase
+        UC_P_SUBMIT(["Nộp kiểm duyệt và Quản lý phát hành"]):::usecase
+        UC_P_PAYOUT(["Yêu cầu rút tiền doanh thu Coin"]):::usecase
+
+        UC_A_MOD(["Kiểm duyệt kịch bản và Xử lý vi phạm"]):::usecase
+        UC_A_OPS(["Giám sát vận hành và Quản lý tài khoản"]):::usecase
+    end
+
+    Guest --- UC_G_AUTH
+    Guest --- UC_G_CATALOG
+
+    Customer --- UC_C_COMMERCE
+    Customer --- UC_C_WALLET
+    Customer --- UC_C_EXEC
+
+    Publisher --- UC_P_DESIGN
+    Publisher --- UC_P_TEST
+    Publisher --- UC_P_SUBMIT
+    Publisher --- UC_P_PAYOUT
+
+    Admin --- UC_A_MOD
+    Admin --- UC_A_OPS
+
+    UC_G_AUTH --- GoogleAuth
+    UC_C_WALLET --- PaymentGateway
+    UC_C_EXEC --- LDPlayer
+    UC_P_TEST --- LDPlayer
+</div><hr>
+<h3 id="2-sơ-đồ-use-case-cho-vai-trò-guest-khách-vãng-lai">2. Sơ đồ Use Case Chi tiết cho vai trò Guest (Khách vãng lai) </h3>
 <div class="mermaid">flowchart LR
     classDef actor fill:#fdf4ff,stroke:#9333ea,stroke-width:2px,font-weight:bold;
     classDef usecase fill:#f0fdf4,stroke:#16a34a,stroke-width:1.5px;
@@ -4538,15 +4608,15 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Guest["👤 Guest&lt;br&gt;(Khách vãng lai)"]:::actor
     GoogleAuth["🌐 Google Identity&lt;br&gt;(External System)"]:::external
 
-    subgraph Boundary_Guest["Ranh giới Hệ thống: Phân hệ Công khai (Public Web Marketplace)"]
-        UC_ACC_01(["UC-ACC-01: Sign Up with Email &amp; Password"]):::usecase
+    subgraph Boundary_Guest["Ranh giới: Phân hệ Công khai (Public Web Marketplace)"]
+        UC_ACC_01(["UC-ACC-01: Sign Up with Email and Password"]):::usecase
         UC_ACC_02(["UC-ACC-02: Verify Email via OTP"]):::usecase
         UC_ACC_03(["UC-ACC-03: Sign In with Credentials"]):::usecase
         UC_ACC_04(["UC-ACC-04: Sign In via Google OAuth"]):::usecase
 
         UC_MKT_01(["UC-MKT-01: Search Products by Keyword"]):::usecase
         UC_MKT_02(["UC-MKT-02: Sort Products by Commercial Metrics"]):::usecase
-        UC_MKT_03(["UC-MKT-03: View Product Details &amp; Media"]):::usecase
+        UC_MKT_03(["UC-MKT-03: View Product Details and Media"]):::usecase
         UC_MKT_04(["UC-MKT-04: View Publisher Public Profile"]):::usecase
     end
 
@@ -4554,36 +4624,36 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Guest --- UC_ACC_03
     Guest --- UC_ACC_04
     Guest --- UC_MKT_01
-    Guest --- UC_MKT_02
     Guest --- UC_MKT_03
     Guest --- UC_MKT_04
 
-    UC_ACC_01 -.-&gt;|&lt;&lt;include&gt;&gt;| UC_ACC_02
+    UC_ACC_01 -.->|«include»| UC_ACC_02
+    UC_MKT_02 -.->|«extend»| UC_MKT_01
     UC_ACC_04 --- GoogleAuth
 </div><hr>
-<h3 id="2-sơ-đồ-use-case-cho-vai-trò-customer-khách-hàng-thực-thi-kịch-bản">2. Sơ đồ Use Case cho vai trò Customer (Khách hàng thực thi kịch bản) </h3>
+<h3 id="3-sơ-đồ-use-case-cho-vai-trò-customer-khách-hàng-thực-thi-kịch-bản">3. Sơ đồ Use Case Chi tiết cho vai trò Customer (Khách hàng thực thi kịch bản) </h3>
 <div class="mermaid">flowchart LR
     classDef actor fill:#eff6ff,stroke:#2563eb,stroke-width:2px,font-weight:bold;
     classDef usecase fill:#f0fdf4,stroke:#16a34a,stroke-width:1.5px;
     classDef external fill:#f8fafc,stroke:#475569,stroke-width:2px,stroke-dasharray: 4 4;
 
     Customer["👤 Customer&lt;br&gt;(Khách hàng)"]:::actor
-    PaymentGateway["🏦 Payment Gateway&lt;br&gt;(SePay / VietQR)"]:::external
-    LDPlayerEngine["📱 LDPlayer Console&lt;br&gt;(Emulator Engine)"]:::external
+    PaymentGateway["🏦 SEPay Gateway&lt;br&gt;(VietQR IPN)"]:::external
+    LDPlayerEngine["📱 LDPlayer Engine&lt;br&gt;(Local Emulator)"]:::external
 
-    subgraph Boundary_Customer["Ranh giới Hệ thống: A2MaTex Web, Wallet &amp; Launcher Desktop"]
-        subgraph Group_Auth["Định danh &amp; Hồ sơ"]
+    subgraph Boundary_Customer["Ranh giới: A2MaTex Customer Operations (Web, Wallet và Launcher)"]
+        subgraph Group_Auth["Tài khoản và Thiết bị Desktop"]
             UC_ACC_05(["UC-ACC-05: Authenticate Desktop Client via SSO"]):::usecase
-            UC_ACC_06(["UC-ACC-06: Sign Out &amp; Revoke Session"]):::usecase
+            UC_ACC_06(["UC-ACC-06: Sign Out and Revoke Session"]):::usecase
             UC_ACC_07(["UC-ACC-07: View Profile Information"]):::usecase
             UC_ACC_08(["UC-ACC-08: Update Profile Information"]):::usecase
             UC_ACC_09(["UC-ACC-09: Change Account Password"]):::usecase
-            UC_ACC_10(["UC-ACC-10: Onboard as Publisher &amp; Accept Terms"]):::usecase
+            UC_ACC_10(["UC-ACC-10: Onboard as Publisher and Accept Terms"]):::usecase
         end
 
-        subgraph Group_Commerce["Thương mại, Sở hữu &amp; Ví Coin"]
+        subgraph Group_Commerce["Thương mại, Bản quyền và Ví Coin"]
             UC_MKT_05(["UC-MKT-05: View Purchase Order History"]):::usecase
-            UC_MKT_06(["UC-MKT-06: View Owned Products &amp; Entitlements"]):::usecase
+            UC_MKT_06(["UC-MKT-06: View Owned Products and Entitlements"]):::usecase
             UC_MKT_07(["UC-MKT-07: Submit Product Violation Report"]):::usecase
             UC_WAL_01(["UC-WAL-01: View Coin Wallet Balance"]):::usecase
             UC_WAL_02(["UC-WAL-02: View Wallet Ledger History"]):::usecase
@@ -4600,7 +4670,7 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
             UC_LNC_05(["UC-LNC-05: Discover Active LDPlayer Instances"]):::usecase
             UC_LNC_06(["UC-LNC-06: Configure Input Parameter Profiles"]):::usecase
             UC_LNC_07(["UC-LNC-07: Request Execution Lease Token"]):::usecase
-            UC_LNC_08(["UC-LNC-08: Monitor Live Execution &amp; Stop"]):::usecase
+            UC_LNC_08(["UC-LNC-08: Monitor Live Execution and Stop"]):::usecase
         end
     end
 
@@ -4616,7 +4686,6 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Customer --- UC_MKT_07
     Customer --- UC_WAL_01
     Customer --- UC_WAL_02
-    Customer --- UC_WAL_03
     Customer --- UC_WAL_04
     Customer --- UC_WAL_05
 
@@ -4628,11 +4697,12 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Customer --- UC_LNC_07
     Customer --- UC_LNC_08
 
+    UC_WAL_03 -.->|«extend»| UC_WAL_04
+    UC_LNC_03 -.->|«include»| UC_LNC_04
     UC_WAL_03 --- PaymentGateway
-    UC_LNC_03 -.-&gt;|&lt;&lt;include&gt;&gt;| UC_LNC_04
     UC_LNC_05 --- LDPlayerEngine
 </div><hr>
-<h3 id="3-sơ-đồ-use-case-cho-vai-trò-publisher-nhà-phát-triển-kịch-bản">3. Sơ đồ Use Case cho vai trò Publisher (Nhà phát triển kịch bản) </h3>
+<h3 id="4-sơ-đồ-use-case-cho-vai-trò-publisher-nhà-phát-triển-kịch-bản">4. Sơ đồ Use Case Chi tiết cho vai trò Publisher (Nhà phát triển kịch bản) </h3>
 <div class="mermaid">flowchart LR
     classDef actor fill:#fefce8,stroke:#ca8a04,stroke-width:2px,font-weight:bold;
     classDef usecase fill:#f0fdf4,stroke:#16a34a,stroke-width:1.5px;
@@ -4641,8 +4711,8 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Publisher["👤 Publisher&lt;br&gt;(Nhà sáng tạo)"]:::actor
     LDPlayerDev["📱 LDPlayer Local&lt;br&gt;(Dev Test Engine)"]:::external
 
-    subgraph Boundary_Publisher["Ranh giới Hệ thống: A2MaTex Studio &amp; Web Publisher Portal"]
-        subgraph Group_Pub_Wallet["Doanh thu &amp; Rút tiền (Payout)"]
+    subgraph Boundary_Publisher["Ranh giới: A2MaTex Studio và Web Publisher Portal"]
+        subgraph Group_Pub_Wallet["Doanh thu và Rút tiền (Payout)"]
             UC_WAL_01(["UC-WAL-01: View Coin Wallet Balance"]):::usecase
             UC_WAL_02(["UC-WAL-02: View Wallet Ledger History"]):::usecase
             UC_WAL_06(["UC-WAL-06: Request Coin Payout (Withdrawal)"]):::usecase
@@ -4650,23 +4720,23 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
         end
 
         subgraph Group_Pub_Web["Web Publisher Portal"]
-            UC_PUB_01(["UC-PUB-01: View Dashboard &amp; Revenue Analytics"]):::usecase
-            UC_PUB_02(["UC-PUB-02: Create Commercial Listing (Meta/Media/Price)"]):::usecase
+            UC_PUB_01(["UC-PUB-01: View Dashboard and Revenue Analytics"]):::usecase
+            UC_PUB_02(["UC-PUB-02: Create Commercial Listing"]):::usecase
             UC_PUB_03(["UC-PUB-03: Link Synchronized Cloud Draft"]):::usecase
             UC_PUB_04(["UC-PUB-04: Submit Product for Moderation Review"]):::usecase
-            UC_PUB_05(["UC-PUB-05: Track Submission Status &amp; Resubmit"]):::usecase
+            UC_PUB_05(["UC-PUB-05: Track Submission Status and Resubmit"]):::usecase
         end
 
         subgraph Group_Pub_Studio["A2MaTex Studio (Workflow Visual Editor)"]
             UC_STU_01(["UC-STU-01: Create New Studio Project"]):::usecase
             UC_STU_02(["UC-STU-02: Open Project Draft from Cloud"]):::usecase
             UC_STU_03(["UC-STU-03: Auto-save Draft to Local SQLite"]):::usecase
-            UC_STU_04(["UC-STU-04: Save &amp; Push Workflow Draft to Cloud"]):::usecase
+            UC_STU_04(["UC-STU-04: Save and Push Workflow Draft to Cloud"]):::usecase
             UC_STU_05(["UC-STU-05: Add Node from Palette to Canvas"]):::usecase
             UC_STU_06(["UC-STU-06: Connect Nodes with Edges"]):::usecase
             UC_STU_07(["UC-STU-07: Configure Node Properties via Schema"]):::usecase
             UC_STU_08(["UC-STU-08: Validate Workflow Graph Syntax"]):::usecase
-            UC_STU_09(["UC-STU-09: Detect Infinite Cycles &amp; Enforce Limits"]):::usecase
+            UC_STU_09(["UC-STU-09: Detect Infinite Cycles and Enforce Limits"]):::usecase
             UC_STU_10(["UC-STU-10: Trigger Local Test Run (Dev Mode)"]):::usecase
         end
     end
@@ -4678,9 +4748,7 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
 
     Publisher --- UC_PUB_01
     Publisher --- UC_PUB_02
-    Publisher --- UC_PUB_03
     Publisher --- UC_PUB_04
-    Publisher --- UC_PUB_05
 
     Publisher --- UC_STU_01
     Publisher --- UC_STU_02
@@ -4689,29 +4757,31 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Publisher --- UC_STU_06
     Publisher --- UC_STU_07
     Publisher --- UC_STU_08
-    Publisher --- UC_STU_09
     Publisher --- UC_STU_10
 
-    UC_STU_05 -.-&gt;|&lt;&lt;include&gt;&gt;| UC_STU_03
-    UC_STU_06 -.-&gt;|&lt;&lt;include&gt;&gt;| UC_STU_03
-    UC_STU_07 -.-&gt;|&lt;&lt;include&gt;&gt;| UC_STU_03
+    UC_PUB_04 -.->|«include»| UC_PUB_03
+    UC_PUB_04 -.->|«include»| UC_STU_08
+    UC_STU_08 -.->|«include»| UC_STU_09
+    UC_STU_10 -.->|«include»| UC_STU_08
+    UC_PUB_05 -.->|«extend»| UC_PUB_04
+
     UC_STU_10 --- LDPlayerDev
 </div><hr>
-<h3 id="4-sơ-đồ-use-case-cho-vai-trò-admin-quản-trị-viên-hệ-thống">4. Sơ đồ Use Case cho vai trò Admin (Quản trị viên hệ thống) </h3>
+<h3 id="5-sơ-đồ-use-case-cho-vai-trò-admin-quản-trị-viên-hệ-thống">5. Sơ đồ Use Case Chi tiết cho vai trò Admin (Quản trị viên hệ thống) </h3>
 <div class="mermaid">flowchart LR
     classDef actor fill:#fef2f2,stroke:#dc2626,stroke-width:2px,font-weight:bold;
     classDef usecase fill:#f0fdf4,stroke:#16a34a,stroke-width:1.5px;
 
     Admin["👤 Admin&lt;br&gt;(Quản trị viên)"]:::actor
 
-    subgraph Boundary_Admin["Ranh giới Hệ thống: A2MaTex Admin Console"]
-        UC_ACC_06(["UC-ACC-06: Sign Out &amp; Revoke Session"]):::usecase
-        UC_ADM_01(["UC-ADM-01: View User Accounts List &amp; Details"]):::usecase
+    subgraph Boundary_Admin["Ranh giới: A2MaTex Admin Moderation và Operations Console"]
+        UC_ACC_06(["UC-ACC-06: Sign Out and Revoke Session"]):::usecase
+        UC_ADM_01(["UC-ADM-01: View User Accounts List and Details"]):::usecase
         UC_ADM_02(["UC-ADM-02: Suspend / Reactivate User Account"]):::usecase
         UC_ADM_03(["UC-ADM-03: Suspend / Revoke Published Product Release"]):::usecase
-        UC_ADM_04(["UC-ADM-04: Review &amp; Resolve Customer Violation Reports"]):::usecase
-        UC_ADM_05(["UC-ADM-05: View System Operations Dashboard &amp; Audit Logs"]):::usecase
-        UC_ADM_06(["UC-ADM-06: Review &amp; Moderate Product Submission"]):::usecase
+        UC_ADM_04(["UC-ADM-04: Review and Resolve Customer Violation Reports"]):::usecase
+        UC_ADM_05(["UC-ADM-05: View System Operations Dashboard and Audit Logs"]):::usecase
+        UC_ADM_06(["UC-ADM-06: Review and Moderate Product Submission"]):::usecase
     end
 
     Admin --- UC_ACC_06
@@ -4721,6 +4791,9 @@ globalThis["mermaid"] = globalThis.__esbuild_esm_mermaid_nm["mermaid"].default;
     Admin --- UC_ADM_04
     Admin --- UC_ADM_05
     Admin --- UC_ADM_06
+
+    UC_ADM_03 -.->|«extend»| UC_ADM_04
+    UC_ADM_02 -.->|«extend»| UC_ADM_04
 </div><hr>
 <h2 id="v-bảng-phân-rã-chi-tiết-từng-use-case-53-use-cases">V. BẢNG PHÂN RÃ CHI TIẾT TỪNG USE CASE (53 USE CASES) </h2>
 <hr>
